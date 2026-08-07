@@ -34,9 +34,12 @@ class _DemoTradingTerminalScreenState extends State<DemoTradingTerminalScreen> {
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900)),
               const SizedBox(height: 12),
               Text(app.selectedSymbol,
-                  style: const TextStyle(fontSize: 28, fontWeight: FontWeight.w900)),
+                  style: const TextStyle(
+                      fontSize: 28, fontWeight: FontWeight.w900)),
               Text(
-                market == null ? 'Waiting for market data' : 'Price ${market.price}',
+                market == null
+                    ? 'Waiting for market data'
+                    : 'Price ${market.price}',
                 style: const TextStyle(color: TradeXColors.muted),
               ),
               const SizedBox(height: 16),
@@ -83,19 +86,24 @@ class _DemoTradingTerminalScreenState extends State<DemoTradingTerminalScreen> {
         const Text('Recent Demo Trades',
             style: TextStyle(fontWeight: FontWeight.w900)),
         ...app.trades.take(12).map(
-          (t) => ListTile(
-            leading: Icon(
-              t.direction == SignalDirection.call
-                  ? Icons.arrow_upward_rounded
-                  : Icons.arrow_downward_rounded,
+              (t) => ListTile(
+                leading: Icon(
+                  t.direction == SignalDirection.call
+                      ? Icons.arrow_upward_rounded
+                      : Icons.arrow_downward_rounded,
+                ),
+                title: Text(t.symbol),
+                subtitle:
+                    Text('\$${t.amount.toStringAsFixed(2)} • ${t.payout}%'),
+                trailing: Text(
+                  t.won == null
+                      ? 'OPEN'
+                      : t.won!
+                          ? 'WIN'
+                          : 'LOSS',
+                ),
+              ),
             ),
-            title: Text(t.symbol),
-            subtitle: Text('\$${t.amount.toStringAsFixed(2)} • ${t.payout}%'),
-            trailing: Text(
-              t.won == null ? 'OPEN' : t.won! ? 'WIN' : 'LOSS',
-            ),
-          ),
-        ),
       ],
     );
   }

@@ -118,8 +118,7 @@ class TwelveDataService {
     if (values.length < period) {
       throw ArgumentError('EMA period exceeds the available candle count.');
     }
-    double current =
-        values.take(period).reduce((a, b) => a + b) / period;
+    double current = values.take(period).reduce((a, b) => a + b) / period;
     final multiplier = 2 / (period + 1);
     for (int i = period; i < values.length; i++) {
       current = (values[i] - current) * multiplier + current;
@@ -154,9 +153,8 @@ class TwelveDataService {
     if (candles.length <= lookback) return 0.5;
     final recent = candles.sublist(candles.length - lookback);
     final ranges = recent.map((c) => (c.high - c.low).abs()).toList();
-    final baseline =
-        ranges.take(ranges.length - 1).reduce((a, b) => a + b) /
-            (ranges.length - 1);
+    final baseline = ranges.take(ranges.length - 1).reduce((a, b) => a + b) /
+        (ranges.length - 1);
     if (baseline <= 0) return 0.5;
     return (ranges.last / baseline / 2).clamp(0.0, 1.0);
   }

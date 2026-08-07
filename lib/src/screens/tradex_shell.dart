@@ -27,6 +27,7 @@ import 'demo_trading_terminal_screen.dart';
 import 'opportunity_scanner_screen.dart';
 import 'automated_analysis_screen.dart';
 import 'login_screen.dart';
+import '../widgets/universal_back_button.dart';
 
 class TradeXShell extends StatefulWidget {
   const TradeXShell({super.key});
@@ -114,6 +115,7 @@ class _TradeXShellState extends State<TradeXShell> {
         final wide = constraints.maxWidth >= 980;
         final scaffold = Scaffold(
           appBar: AppBar(
+            automaticallyImplyLeading: false,
             title: Text(labels[selected]),
             leading: wide
                 ? null
@@ -246,15 +248,13 @@ class _TradeXShellState extends State<TradeXShell> {
                   ),
                   leading: Icon(
                     icons[index],
-                    color:
-                        active ? TradeXColors.cyan : TradeXColors.muted,
+                    color: active ? TradeXColors.cyan : TradeXColors.muted,
                   ),
                   title: Text(
                     labels[index],
                     style: TextStyle(
                       fontSize: 13,
-                      fontWeight:
-                          active ? FontWeight.w800 : FontWeight.w600,
+                      fontWeight: active ? FontWeight.w800 : FontWeight.w600,
                     ),
                   ),
                   onTap: () {
@@ -406,7 +406,11 @@ class TradeXCommandCenter extends StatelessWidget {
           ),
           const SizedBox(height: 14),
           GridView.count(
-            crossAxisCount: width >= 1350 ? 5 : width >= 850 ? 3 : 2,
+            crossAxisCount: width >= 1350
+                ? 5
+                : width >= 850
+                    ? 3
+                    : 2,
             childAspectRatio: width >= 850 ? 1.8 : 1.45,
             crossAxisSpacing: 12,
             mainAxisSpacing: 12,
@@ -476,7 +480,8 @@ class TradeXCommandCenter extends StatelessWidget {
                   const SizedBox(width: 12),
                   Expanded(flex: 4, child: _aiPanel(context, best)),
                   const SizedBox(width: 12),
-                  Expanded(flex: 3, child: _riskPanel(context, app, integration)),
+                  Expanded(
+                      flex: 3, child: _riskPanel(context, app, integration)),
                 ],
               );
             },
@@ -711,9 +716,7 @@ class TradeXCommandCenter extends StatelessWidget {
     IntegrationController integration,
   ) {
     return XGlassPanel(
-      glowColor: integration.killSwitch
-          ? TradeXColors.red
-          : TradeXColors.green,
+      glowColor: integration.killSwitch ? TradeXColors.red : TradeXColors.green,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -749,9 +752,7 @@ class TradeXCommandCenter extends StatelessWidget {
               ),
             ),
             child: Text(
-              integration.killSwitch
-                  ? 'EXECUTION LOCKED'
-                  : 'PROTECTION ACTIVE',
+              integration.killSwitch ? 'EXECUTION LOCKED' : 'PROTECTION ACTIVE',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: integration.killSwitch

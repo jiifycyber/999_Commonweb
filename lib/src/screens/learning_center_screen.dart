@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../advanced_models.dart';
 import '../learning_controller.dart';
+import '../widgets/universal_back_button.dart';
 
 class LearningCenterScreen extends StatelessWidget {
   const LearningCenterScreen({super.key});
@@ -11,7 +12,10 @@ class LearningCenterScreen extends StatelessWidget {
     final learning = context.watch<LearningController>();
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Titan Learning Center')),
+      appBar: AppBar(
+          automaticallyImplyLeading: false,
+          leading: const UniversalBackButton(),
+          title: const Text('Titan Learning Center')),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [

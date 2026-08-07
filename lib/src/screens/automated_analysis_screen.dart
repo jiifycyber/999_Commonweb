@@ -37,9 +37,11 @@ class AutomatedAnalysisScreen extends StatelessWidget {
               Text(
                 'Trend strength: ${(analysis.trendStrength * 100).toStringAsFixed(0)}%',
               ),
-              Text('Breakout possible: ${analysis.breakoutPossible ? 'YES' : 'NO'}'),
+              Text(
+                  'Breakout possible: ${analysis.breakoutPossible ? 'YES' : 'NO'}'),
               Text('Support nearby: ${analysis.supportNearby ? 'YES' : 'NO'}'),
-              Text('Resistance nearby: ${analysis.resistanceNearby ? 'YES' : 'NO'}'),
+              Text(
+                  'Resistance nearby: ${analysis.resistanceNearby ? 'YES' : 'NO'}'),
             ],
           ),
         ),

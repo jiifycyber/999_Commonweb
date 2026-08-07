@@ -55,7 +55,8 @@ class IntegrationController extends ChangeNotifier {
 
     final request = queue[index].copyWith(approved: true);
     queue[index] = request;
-    _audit('TRADE_APPROVED', '${request.symbol} ${request.direction} approved.');
+    _audit(
+        'TRADE_APPROVED', '${request.symbol} ${request.direction} approved.');
 
     if (!liveModeRequested) {
       notifyListeners();

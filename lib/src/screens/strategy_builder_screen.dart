@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../quantum_models.dart';
 import '../strategy_builder_controller.dart';
 import '../widgets/egypt_widgets.dart';
+import '../widgets/universal_back_button.dart';
 
 class StrategyBuilderScreen extends StatefulWidget {
   const StrategyBuilderScreen({super.key});
@@ -24,7 +25,10 @@ class _StrategyBuilderScreenState extends State<StrategyBuilderScreen> {
   Widget build(BuildContext context) {
     final controller = context.watch<StrategyBuilderController>();
     return Scaffold(
-      appBar: AppBar(title: const Text('NO-CODE STRATEGY BUILDER')),
+      appBar: AppBar(
+          automaticallyImplyLeading: false,
+          leading: const UniversalBackButton(),
+          title: const Text('NO-CODE STRATEGY BUILDER')),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [

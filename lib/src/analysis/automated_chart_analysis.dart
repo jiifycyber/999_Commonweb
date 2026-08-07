@@ -29,11 +29,13 @@ class AutomatedChartAnalyzer {
             .clamp(0.0, 1.0);
 
     return AutomatedChartAnalysis(
-      trend: bullish ? 'BULLISH' : bearish ? 'BEARISH' : 'RANGING',
-      trendStrength: (separation + market.momentum.abs() * .45)
-          .clamp(0.0, 1.0),
-      breakoutPossible:
-          market.volatility > .62 && market.volumeStrength > .65,
+      trend: bullish
+          ? 'BULLISH'
+          : bearish
+              ? 'BEARISH'
+              : 'RANGING',
+      trendStrength: (separation + market.momentum.abs() * .45).clamp(0.0, 1.0),
+      breakoutPossible: market.volatility > .62 && market.volumeStrength > .65,
       supportNearby: market.momentum < -.35,
       resistanceNearby: market.momentum > .35,
       patterns: [

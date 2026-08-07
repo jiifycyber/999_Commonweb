@@ -262,6 +262,7 @@ class IndicatorMath {
       }
       return tr == 0 ? 0.5 : bp / tr;
     }
+
     return 100 * (4 * avg(s) + 2 * avg(m) + avg(l)) / 7;
   }
 
@@ -301,8 +302,7 @@ class IndicatorMath {
     final p = min(period, values.length);
     final w = values.sublist(values.length - p);
     final mean = w.reduce((a, b) => a + b) / p;
-    final variance =
-        w.map((v) => pow(v - mean, 2)).reduce((a, b) => a + b) / p;
+    final variance = w.map((v) => pow(v - mean, 2)).reduce((a, b) => a + b) / p;
     return sqrt(variance);
   }
 
@@ -418,8 +418,7 @@ class IndicatorMath {
     for (int i = candles.length - p; i < candles.length; i++) {
       final tp = (candles[i].high + candles[i].low + candles[i].close) / 3;
       final prevTp =
-          (candles[i - 1].high + candles[i - 1].low + candles[i - 1].close) /
-              3;
+          (candles[i - 1].high + candles[i - 1].low + candles[i - 1].close) / 3;
       final flow = tp * candles[i].volume;
       if (tp >= prevTp) {
         positive += flow;
@@ -471,9 +470,8 @@ class IndicatorMath {
     if (candles.length < 2) return 0;
     final vals = <double>[];
     for (int i = 1; i < candles.length; i++) {
-      final distance =
-          ((candles[i].high + candles[i].low) / 2) -
-              ((candles[i - 1].high + candles[i - 1].low) / 2);
+      final distance = ((candles[i].high + candles[i].low) / 2) -
+          ((candles[i - 1].high + candles[i - 1].low) / 2);
       final range = candles[i].high - candles[i].low;
       final boxRatio = range == 0 ? 0 : candles[i].volume / range;
       vals.add(boxRatio == 0 ? 0 : distance / boxRatio);
@@ -506,18 +504,12 @@ class IndicatorMath {
 
   static double support(List<IndicatorCandle> candles, int period) {
     final p = min(period, candles.length);
-    return candles
-        .sublist(candles.length - p)
-        .map((e) => e.low)
-        .reduce(min);
+    return candles.sublist(candles.length - p).map((e) => e.low).reduce(min);
   }
 
   static double resistance(List<IndicatorCandle> candles, int period) {
     final p = min(period, candles.length);
-    return candles
-        .sublist(candles.length - p)
-        .map((e) => e.high)
-        .reduce(max);
+    return candles.sublist(candles.length - p).map((e) => e.high).reduce(max);
   }
 
   static double pivot(List<IndicatorCandle> candles) {
@@ -536,7 +528,8 @@ class IndicatorMath {
 
   static double breakoutScore(List<IndicatorCandle> candles, int period) {
     if (candles.length <= period) return 0;
-    final prior = candles.sublist(candles.length - period - 1, candles.length - 1);
+    final prior =
+        candles.sublist(candles.length - period - 1, candles.length - 1);
     final hi = prior.map((e) => e.high).reduce(max);
     final lo = prior.map((e) => e.low).reduce(min);
     if (candles.last.close > hi) return 1;
@@ -592,103 +585,185 @@ class TitanIndicatorPack250 {
     }
 
     // 1-15 SMA
-    for (final p in [5, 9, 10, 14, 20, 21, 25, 30, 34, 50, 55, 75, 100, 144, 200]) {
-      add('sma_$p', 'SMA $p', IndicatorCategory.trend,
+    for (final p in [
+      5,
+      9,
+      10,
+      14,
+      20,
+      21,
+      25,
+      30,
+      34,
+      50,
+      55,
+      75,
+      100,
+      144,
+      200
+    ]) {
+      add(
+          'sma_$p',
+          'SMA $p',
+          IndicatorCategory.trend,
           'Simple moving average, period $p.',
           (c) => IndicatorMath.sma(closes(c), p));
     }
     // 16-30 EMA
-    for (final p in [5, 9, 10, 14, 20, 21, 25, 30, 34, 50, 55, 75, 100, 144, 200]) {
-      add('ema_$p', 'EMA $p', IndicatorCategory.trend,
+    for (final p in [
+      5,
+      9,
+      10,
+      14,
+      20,
+      21,
+      25,
+      30,
+      34,
+      50,
+      55,
+      75,
+      100,
+      144,
+      200
+    ]) {
+      add(
+          'ema_$p',
+          'EMA $p',
+          IndicatorCategory.trend,
           'Exponential moving average, period $p.',
           (c) => IndicatorMath.ema(closes(c), p));
     }
     // 31-40 WMA
     for (final p in [5, 9, 10, 14, 20, 30, 50, 75, 100, 200]) {
-      add('wma_$p', 'WMA $p', IndicatorCategory.trend,
+      add(
+          'wma_$p',
+          'WMA $p',
+          IndicatorCategory.trend,
           'Weighted moving average, period $p.',
           (c) => IndicatorMath.wma(closes(c), p));
     }
     // 41-50 HMA
     for (final p in [9, 14, 20, 21, 34, 50, 55, 75, 100, 200]) {
-      add('hma_$p', 'HMA $p', IndicatorCategory.trend,
+      add(
+          'hma_$p',
+          'HMA $p',
+          IndicatorCategory.trend,
           'Hull moving average, period $p.',
           (c) => IndicatorMath.hma(closes(c), p));
     }
     // 51-60 DEMA
     for (final p in [5, 9, 10, 14, 20, 30, 50, 75, 100, 200]) {
-      add('dema_$p', 'DEMA $p', IndicatorCategory.trend,
+      add(
+          'dema_$p',
+          'DEMA $p',
+          IndicatorCategory.trend,
           'Double exponential moving average, period $p.',
           (c) => IndicatorMath.dema(closes(c), p));
     }
     // 61-70 TEMA
     for (final p in [5, 9, 10, 14, 20, 30, 50, 75, 100, 200]) {
-      add('tema_$p', 'TEMA $p', IndicatorCategory.trend,
+      add(
+          'tema_$p',
+          'TEMA $p',
+          IndicatorCategory.trend,
           'Triple exponential moving average, period $p.',
           (c) => IndicatorMath.tema(closes(c), p));
     }
     // 71-80 ZLEMA
     for (final p in [5, 9, 10, 14, 20, 30, 50, 75, 100, 200]) {
-      add('zlema_$p', 'ZLEMA $p', IndicatorCategory.trend,
+      add(
+          'zlema_$p',
+          'ZLEMA $p',
+          IndicatorCategory.trend,
           'Zero-lag EMA approximation, period $p.',
           (c) => IndicatorMath.zlema(closes(c), p));
     }
     // 81-86 KAMA
     for (final p in [5, 10, 14, 20, 30, 50]) {
-      add('kama_$p', 'KAMA $p', IndicatorCategory.trend,
+      add(
+          'kama_$p',
+          'KAMA $p',
+          IndicatorCategory.trend,
           'Kaufman adaptive moving average, period $p.',
           (c) => IndicatorMath.kama(closes(c), p));
     }
 
     // 87-96 RSI
     for (final p in [5, 7, 9, 10, 12, 14, 20, 21, 30, 50]) {
-      add('rsi_$p', 'RSI $p', IndicatorCategory.momentum,
+      add(
+          'rsi_$p',
+          'RSI $p',
+          IndicatorCategory.momentum,
           'Relative Strength Index, period $p.',
           (c) => IndicatorMath.rsi(closes(c), p));
     }
     // 97-104 Stochastic
     for (final p in [5, 7, 9, 10, 14, 20, 21, 30]) {
-      add('stoch_$p', 'Stochastic $p', IndicatorCategory.momentum,
+      add(
+          'stoch_$p',
+          'Stochastic $p',
+          IndicatorCategory.momentum,
           'Stochastic oscillator %K, period $p.',
           (c) => IndicatorMath.stochastic(c, p));
     }
     // 105-112 Stochastic RSI
     for (final p in [5, 7, 9, 10, 14, 20, 21, 30]) {
-      add('stochrsi_$p', 'Stochastic RSI $p', IndicatorCategory.momentum,
+      add(
+          'stochrsi_$p',
+          'Stochastic RSI $p',
+          IndicatorCategory.momentum,
           'Stochastic RSI, period $p.',
           (c) => IndicatorMath.stochasticRsi(closes(c), p));
     }
     // 113-122 ROC
     for (final p in [1, 3, 5, 7, 9, 10, 12, 14, 20, 30]) {
       add('roc_$p', 'ROC $p', IndicatorCategory.momentum,
-          'Rate of change, period $p.',
-          (c) => IndicatorMath.roc(closes(c), p));
+          'Rate of change, period $p.', (c) => IndicatorMath.roc(closes(c), p));
     }
     // 123-132 Momentum
     for (final p in [1, 3, 5, 7, 9, 10, 12, 14, 20, 30]) {
-      add('mom_$p', 'Momentum $p', IndicatorCategory.momentum,
+      add(
+          'mom_$p',
+          'Momentum $p',
+          IndicatorCategory.momentum,
           'Price momentum, period $p.',
           (c) => IndicatorMath.momentum(closes(c), p));
     }
     // 133-140 Williams %R
     for (final p in [5, 7, 9, 10, 14, 20, 21, 30]) {
-      add('willr_$p', 'Williams %R $p', IndicatorCategory.momentum,
+      add(
+          'willr_$p',
+          'Williams %R $p',
+          IndicatorCategory.momentum,
           'Williams percent R, period $p.',
           (c) => IndicatorMath.williamsR(c, p));
     }
     // 141-148 CCI
     for (final p in [5, 7, 9, 10, 14, 20, 21, 30]) {
-      add('cci_$p', 'CCI $p', IndicatorCategory.momentum,
+      add(
+          'cci_$p',
+          'CCI $p',
+          IndicatorCategory.momentum,
           'Commodity Channel Index, period $p.',
           (c) => IndicatorMath.cci(c, p));
     }
     // 149-158 MACD variants
     final macds = [
-      [5, 13, 4], [6, 19, 4], [8, 17, 9], [8, 21, 5], [10, 20, 7],
-      [12, 26, 9], [15, 30, 9], [19, 39, 9], [24, 52, 18], [3, 10, 16],
+      [5, 13, 4],
+      [6, 19, 4],
+      [8, 17, 9],
+      [8, 21, 5],
+      [10, 20, 7],
+      [12, 26, 9],
+      [15, 30, 9],
+      [19, 39, 9],
+      [24, 52, 18],
+      [3, 10, 16],
     ];
     for (final m in macds) {
-      add('macd_${m[0]}_${m[1]}_${m[2]}',
+      add(
+          'macd_${m[0]}_${m[1]}_${m[2]}',
           'MACD ${m[0]}/${m[1]}/${m[2]}',
           IndicatorCategory.momentum,
           'MACD histogram variant.',
@@ -696,112 +771,168 @@ class TitanIndicatorPack250 {
     }
     // 159-164 TRIX
     for (final p in [5, 9, 10, 14, 20, 30]) {
-      add('trix_$p', 'TRIX $p', IndicatorCategory.momentum,
+      add(
+          'trix_$p',
+          'TRIX $p',
+          IndicatorCategory.momentum,
           'Triple-smoothed rate of change, period $p.',
           (c) => IndicatorMath.trix(closes(c), p));
     }
     // 165-170 CMO
     for (final p in [5, 9, 10, 14, 20, 30]) {
-      add('cmo_$p', 'CMO $p', IndicatorCategory.momentum,
+      add(
+          'cmo_$p',
+          'CMO $p',
+          IndicatorCategory.momentum,
           'Chande Momentum Oscillator, period $p.',
           (c) => IndicatorMath.cmo(closes(c), p));
     }
     // 171-174 Ultimate Oscillator
-    for (final v in [[4,8,16], [7,14,28], [5,10,20], [10,20,40]]) {
-      add('ultimate_${v[0]}_${v[1]}_${v[2]}',
+    for (final v in [
+      [4, 8, 16],
+      [7, 14, 28],
+      [5, 10, 20],
+      [10, 20, 40]
+    ]) {
+      add(
+          'ultimate_${v[0]}_${v[1]}_${v[2]}',
           'Ultimate ${v[0]}/${v[1]}/${v[2]}',
           IndicatorCategory.momentum,
           'Ultimate Oscillator variant.',
           (c) => IndicatorMath.ultimate(c, v[0], v[1], v[2]));
     }
     // 175-178 Awesome Oscillator
-    for (final v in [[5,34], [3,21], [8,55], [10,50]]) {
-      add('awesome_${v[0]}_${v[1]}', 'Awesome ${v[0]}/${v[1]}',
-          IndicatorCategory.momentum, 'Awesome Oscillator variant.',
+    for (final v in [
+      [5, 34],
+      [3, 21],
+      [8, 55],
+      [10, 50]
+    ]) {
+      add(
+          'awesome_${v[0]}_${v[1]}',
+          'Awesome ${v[0]}/${v[1]}',
+          IndicatorCategory.momentum,
+          'Awesome Oscillator variant.',
           (c) => IndicatorMath.awesome(c, v[0], v[1]));
     }
     // 179-182 Fisher
     for (final p in [9, 10, 14, 20]) {
-      add('fisher_$p', 'Fisher Transform $p',
-          IndicatorCategory.momentum, 'Fisher transform, period $p.',
-          (c) => IndicatorMath.fisher(c, p));
+      add('fisher_$p', 'Fisher Transform $p', IndicatorCategory.momentum,
+          'Fisher transform, period $p.', (c) => IndicatorMath.fisher(c, p));
     }
 
     // 183-192 ATR
     for (final p in [5, 7, 9, 10, 12, 14, 20, 21, 30, 50]) {
       add('atr_$p', 'ATR $p', IndicatorCategory.volatility,
-          'Average True Range, period $p.',
-          (c) => IndicatorMath.atr(c, p));
+          'Average True Range, period $p.', (c) => IndicatorMath.atr(c, p));
     }
     // 193-202 Bollinger Z variants
     final bbs = [
-      [10, 1.5], [10, 2.0], [14, 1.5], [14, 2.0], [20, 1.5],
-      [20, 2.0], [20, 2.5], [30, 2.0], [50, 2.0], [100, 2.0],
+      [10, 1.5],
+      [10, 2.0],
+      [14, 1.5],
+      [14, 2.0],
+      [20, 1.5],
+      [20, 2.0],
+      [20, 2.5],
+      [30, 2.0],
+      [50, 2.0],
+      [100, 2.0],
     ];
     for (final b in bbs) {
-      add('bb_${b[0]}_${b[1]}', 'Bollinger ${b[0]} x${b[1]}',
-          IndicatorCategory.volatility, 'Normalized Bollinger position.',
+      add(
+          'bb_${b[0]}_${b[1]}',
+          'Bollinger ${b[0]} x${b[1]}',
+          IndicatorCategory.volatility,
+          'Normalized Bollinger position.',
           (c) => IndicatorMath.bollingerZ(
               closes(c), (b[0] as num).toInt(), (b[1] as num).toDouble()));
     }
     // 203-210 Keltner
     final kcs = [
-      [10, 1.5], [10, 2.0], [14, 1.5], [14, 2.0],
-      [20, 1.5], [20, 2.0], [30, 2.0], [50, 2.0],
+      [10, 1.5],
+      [10, 2.0],
+      [14, 1.5],
+      [14, 2.0],
+      [20, 1.5],
+      [20, 2.0],
+      [30, 2.0],
+      [50, 2.0],
     ];
     for (final k in kcs) {
-      add('kc_${k[0]}_${k[1]}', 'Keltner ${k[0]} x${k[1]}',
-          IndicatorCategory.volatility, 'Normalized Keltner position.',
+      add(
+          'kc_${k[0]}_${k[1]}',
+          'Keltner ${k[0]} x${k[1]}',
+          IndicatorCategory.volatility,
+          'Normalized Keltner position.',
           (c) => IndicatorMath.keltnerPosition(
               c, (k[0] as num).toInt(), (k[1] as num).toDouble()));
     }
     // 211-218 Donchian
     for (final p in [5, 10, 14, 20, 30, 50, 100, 200]) {
-      add('donchian_$p', 'Donchian Position $p',
-          IndicatorCategory.volatility, 'Position inside Donchian channel.',
+      add(
+          'donchian_$p',
+          'Donchian Position $p',
+          IndicatorCategory.volatility,
+          'Position inside Donchian channel.',
           (c) => IndicatorMath.donchianPosition(c, p));
     }
     // 219-226 StdDev
     for (final p in [5, 10, 14, 20, 30, 50, 100, 200]) {
-      add('stddev_$p', 'Standard Deviation $p',
-          IndicatorCategory.volatility, 'Price standard deviation.',
+      add(
+          'stddev_$p',
+          'Standard Deviation $p',
+          IndicatorCategory.volatility,
+          'Price standard deviation.',
           (c) => IndicatorMath.stdDev(closes(c), p));
     }
     // 227-234 Historical Volatility
     for (final p in [5, 10, 14, 20, 30, 50, 100, 200]) {
-      add('hv_$p', 'Historical Volatility $p',
-          IndicatorCategory.volatility, 'Annualized historical volatility.',
+      add(
+          'hv_$p',
+          'Historical Volatility $p',
+          IndicatorCategory.volatility,
+          'Annualized historical volatility.',
           (c) => IndicatorMath.historicalVolatility(closes(c), p));
     }
     // 235-238 Chaikin Volatility
     for (final p in [5, 10, 14, 20]) {
-      add('chaikin_vol_$p', 'Chaikin Volatility $p',
-          IndicatorCategory.volatility, 'Chaikin range volatility.',
+      add(
+          'chaikin_vol_$p',
+          'Chaikin Volatility $p',
+          IndicatorCategory.volatility,
+          'Chaikin range volatility.',
           (c) => IndicatorMath.chaikinVolatility(c, p));
     }
     // 239-242 Mass Index
     for (final p in [9, 14, 25, 30]) {
       add('mass_$p', 'Mass Index $p', IndicatorCategory.volatility,
-          'Mass Index, period $p.',
-          (c) => IndicatorMath.massIndex(c, p));
+          'Mass Index, period $p.', (c) => IndicatorMath.massIndex(c, p));
     }
     // 243-246 Ulcer Index
     for (final p in [5, 10, 14, 20]) {
-      add('ulcer_$p', 'Ulcer Index $p', IndicatorCategory.volatility,
+      add(
+          'ulcer_$p',
+          'Ulcer Index $p',
+          IndicatorCategory.volatility,
           'Ulcer Index, period $p.',
           (c) => IndicatorMath.ulcerIndex(closes(c), p));
     }
     // 247-250 Structure modules
     add('support_50', 'Support Level 50', IndicatorCategory.structure,
-        'Lowest low over 50 candles.',
-        (c) => IndicatorMath.support(c, 50));
-    add('resistance_50', 'Resistance Level 50', IndicatorCategory.structure,
+        'Lowest low over 50 candles.', (c) => IndicatorMath.support(c, 50));
+    add(
+        'resistance_50',
+        'Resistance Level 50',
+        IndicatorCategory.structure,
         'Highest high over 50 candles.',
         (c) => IndicatorMath.resistance(c, 50));
     add('pivot_classic', 'Classic Pivot', IndicatorCategory.structure,
-        'Classic pivot price.',
-        (c) => IndicatorMath.pivot(c));
-    add('breakout_20', 'Breakout Detector 20', IndicatorCategory.structure,
+        'Classic pivot price.', (c) => IndicatorMath.pivot(c));
+    add(
+        'breakout_20',
+        'Breakout Detector 20',
+        IndicatorCategory.structure,
         'Returns 1 for upside breakout, -1 for downside, 0 otherwise.',
         (c) => IndicatorMath.breakoutScore(c, 20));
 

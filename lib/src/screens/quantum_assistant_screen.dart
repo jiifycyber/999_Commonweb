@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import '../widgets/egypt_widgets.dart';
+import '../widgets/universal_back_button.dart';
 
 class QuantumAssistantScreen extends StatefulWidget {
   const QuantumAssistantScreen({super.key});
 
   @override
-  State<QuantumAssistantScreen> createState() =>
-      _QuantumAssistantScreenState();
+  State<QuantumAssistantScreen> createState() => _QuantumAssistantScreenState();
 }
 
 class _QuantumAssistantScreenState extends State<QuantumAssistantScreen> {
@@ -46,7 +46,10 @@ class _QuantumAssistantScreenState extends State<QuantumAssistantScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('TITAN QUANTUM ASSISTANT')),
+      appBar: AppBar(
+          automaticallyImplyLeading: false,
+          leading: const UniversalBackButton(),
+          title: const Text('TITAN QUANTUM ASSISTANT')),
       body: Column(
         children: [
           const Padding(
@@ -76,8 +79,7 @@ class _QuantumAssistantScreenState extends State<QuantumAssistantScreen> {
                   child: TextField(
                     controller: controller,
                     onSubmitted: (_) => send(),
-                    decoration:
-                        const InputDecoration(labelText: 'Ask TITAN'),
+                    decoration: const InputDecoration(labelText: 'Ask TITAN'),
                   ),
                 ),
                 const SizedBox(width: 8),

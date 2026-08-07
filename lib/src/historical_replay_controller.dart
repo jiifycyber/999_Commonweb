@@ -27,7 +27,8 @@ class HistoricalReplayController extends ChangeNotifier {
           time: candles[i].time,
           price: candles[i].close,
           signal: direction,
-          confidence: direction == 'WAIT' ? 0 : 72 + (momentum.abs() * 20).round(),
+          confidence:
+              direction == 'WAIT' ? 0 : 72 + (momentum.abs() * 20).round(),
         ),
       );
     }

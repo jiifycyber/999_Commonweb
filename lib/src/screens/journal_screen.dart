@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../app_state.dart';
 import '../models.dart';
 import '../learning_controller.dart';
+import '../widgets/universal_back_button.dart';
 
 class JournalScreen extends StatelessWidget {
   const JournalScreen({super.key});
@@ -12,7 +13,10 @@ class JournalScreen extends StatelessWidget {
     final app = context.watch<TradeXAppState>();
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Trade Journal')),
+      appBar: AppBar(
+          automaticallyImplyLeading: false,
+          leading: const UniversalBackButton(),
+          title: const Text('Trade Journal')),
       body: app.trades.isEmpty
           ? const Center(child: Text('No approved demo trades yet.'))
           : ListView.builder(
@@ -38,15 +42,16 @@ class JournalScreen extends StatelessWidget {
                                 onPressed: () {
                                   app.settleTrade(index, true);
                                   context.read<LearningController>().record(
-                                    symbol: t.symbol,
-                                    direction: t.direction == SignalDirection.call
-                                        ? 'CALL'
-                                        : 'PUT',
-                                    expirationMinutes: 3,
-                                    confidence: 80,
-                                    won: true,
-                                    profit: t.amount * t.payout / 100,
-                                  );
+                                        symbol: t.symbol,
+                                        direction:
+                                            t.direction == SignalDirection.call
+                                                ? 'CALL'
+                                                : 'PUT',
+                                        expirationMinutes: 3,
+                                        confidence: 80,
+                                        won: true,
+                                        profit: t.amount * t.payout / 100,
+                                      );
                                 },
                                 icon: const Icon(Icons.check_circle),
                               ),
@@ -55,15 +60,16 @@ class JournalScreen extends StatelessWidget {
                                 onPressed: () {
                                   app.settleTrade(index, false);
                                   context.read<LearningController>().record(
-                                    symbol: t.symbol,
-                                    direction: t.direction == SignalDirection.call
-                                        ? 'CALL'
-                                        : 'PUT',
-                                    expirationMinutes: 3,
-                                    confidence: 80,
-                                    won: false,
-                                    profit: -t.amount,
-                                  );
+                                        symbol: t.symbol,
+                                        direction:
+                                            t.direction == SignalDirection.call
+                                                ? 'CALL'
+                                                : 'PUT',
+                                        expirationMinutes: 3,
+                                        confidence: 80,
+                                        won: false,
+                                        profit: -t.amount,
+                                      );
                                 },
                                 icon: const Icon(Icons.cancel),
                               ),

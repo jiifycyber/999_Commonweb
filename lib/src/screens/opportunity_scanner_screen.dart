@@ -8,11 +8,19 @@ class OpportunityScannerScreen extends StatelessWidget {
   const OpportunityScannerScreen({super.key});
 
   static const values = [
-    OpportunityScanResult(symbol: 'EUR/USD', entryQuality: .94, state: 'ARMED', direction: 'BUY'),
-    OpportunityScanResult(symbol: 'XAU/USD', entryQuality: .93, state: 'ENTER NOW', direction: 'BUY'),
-    OpportunityScanResult(symbol: 'BTC/USD', entryQuality: .89, state: 'ARMED', direction: 'BUY'),
-    OpportunityScanResult(symbol: 'GBP/JPY', entryQuality: .81, state: 'WAIT', direction: 'SELL'),
-    OpportunityScanResult(symbol: 'NAS100', entryQuality: .78, state: 'WAIT', direction: 'BUY'),
+    OpportunityScanResult(
+        symbol: 'EUR/USD', entryQuality: .94, state: 'ARMED', direction: 'BUY'),
+    OpportunityScanResult(
+        symbol: 'XAU/USD',
+        entryQuality: .93,
+        state: 'ENTER NOW',
+        direction: 'BUY'),
+    OpportunityScanResult(
+        symbol: 'BTC/USD', entryQuality: .89, state: 'ARMED', direction: 'BUY'),
+    OpportunityScanResult(
+        symbol: 'GBP/JPY', entryQuality: .81, state: 'WAIT', direction: 'SELL'),
+    OpportunityScanResult(
+        symbol: 'NAS100', entryQuality: .78, state: 'WAIT', direction: 'BUY'),
   ];
 
   @override
@@ -32,7 +40,8 @@ class OpportunityScannerScreen extends StatelessWidget {
               backgroundColor: TradeXColors.cyan.withValues(alpha: .12),
               child: Text('${i + 1}'),
             ),
-            title: Text(r.symbol, style: const TextStyle(fontWeight: FontWeight.w900)),
+            title: Text(r.symbol,
+                style: const TextStyle(fontWeight: FontWeight.w900)),
             subtitle: Text('${r.direction} • ${r.state}'),
             trailing: Text(
               '${(r.entryQuality * 100).toStringAsFixed(0)}%',
@@ -44,7 +53,8 @@ class OpportunityScannerScreen extends StatelessWidget {
             ),
             onTap: () => Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (_) => ProfessionalChartScreen(initialSymbol: r.symbol),
+                builder: (_) =>
+                    ProfessionalChartScreen(initialSymbol: r.symbol),
               ),
             ),
           ),

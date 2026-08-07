@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../app_state.dart';
+import '../widgets/universal_back_button.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -31,13 +32,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     final app = context.watch<TradeXAppState>();
     return Scaffold(
-      appBar: AppBar(title: const Text('Risk Controls')),
+      appBar: AppBar(
+          automaticallyImplyLeading: false,
+          leading: const UniversalBackButton(),
+          title: const Text('Risk Controls')),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          _slider('Account balance', balance, 100, 100000, (v) => setState(() => balance = v),
+          _slider('Account balance', balance, 100, 100000,
+              (v) => setState(() => balance = v),
               valueText: '\$${balance.toStringAsFixed(0)}'),
-          _slider('Risk per trade', risk, .25, 3, (v) => setState(() => risk = v),
+          _slider(
+              'Risk per trade', risk, .25, 3, (v) => setState(() => risk = v),
               valueText: '${risk.toStringAsFixed(2)}%'),
           _slider('Daily loss limit', lossLimit, 1, 10,
               (v) => setState(() => lossLimit = v),
@@ -52,7 +58,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
             value: app.demoMode,
             onChanged: (v) => app.updateSettings(demo: v),
             title: const Text('Demo mode'),
-            subtitle: const Text('Live execution remains disabled in this starter.'),
+            subtitle:
+                const Text('Live execution remains disabled in this starter.'),
           ),
           const SizedBox(height: 16),
           FilledButton(

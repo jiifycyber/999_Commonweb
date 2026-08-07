@@ -31,8 +31,7 @@ class MultiTimeframeEngine {
   ) {
     final closes = candles.map((c) => c.close).toList();
     final ema20 = TwelveDataService.ema(closes, min(20, closes.length));
-    final ema200 =
-        TwelveDataService.ema(closes, min(200, closes.length));
+    final ema200 = TwelveDataService.ema(closes, min(200, closes.length));
     final rsi = AdvancedIndicators.rsi(closes);
     final macdValues = AdvancedIndicators.macd(closes);
     final bands = AdvancedIndicators.bollinger(closes);
@@ -84,8 +83,7 @@ class MultiTimeframeEngine {
     if (pattern.contains('Bullish') || pattern == 'Hammer') {
       bullish += 12;
       reasons.add(pattern);
-    } else if (pattern.contains('Bearish') ||
-        pattern == 'Shooting Star') {
+    } else if (pattern.contains('Bearish') || pattern == 'Shooting Star') {
       bearish += 12;
       reasons.add(pattern);
     } else if (pattern == 'Doji') {
@@ -159,8 +157,7 @@ class MultiTimeframeEngine {
     if (direction != 'WAIT') {
       final aligned = analyses.where((a) => a.direction == direction).toList();
       confidence =
-          (aligned.map((a) => a.score).reduce((a, b) => a + b) /
-                  aligned.length)
+          (aligned.map((a) => a.score).reduce((a, b) => a + b) / aligned.length)
               .round();
       if (aligned.length == 3) confidence = min(100, confidence + 8);
     }

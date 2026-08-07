@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../integration/connector_models.dart';
 import '../integration/integration_controller.dart';
+import '../widgets/universal_back_button.dart';
 
 class Stage5IntegrationScreen extends StatelessWidget {
   const Stage5IntegrationScreen({super.key});
@@ -20,7 +21,10 @@ class Stage5IntegrationScreen extends StatelessWidget {
     final status = integration.connectorStatus;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Stage 5 Integration Center')),
+      appBar: AppBar(
+          automaticallyImplyLeading: false,
+          leading: const UniversalBackButton(),
+          title: const Text('Stage 5 Integration Center')),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
@@ -59,8 +63,7 @@ class Stage5IntegrationScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 12),
-          Text('Approval Queue',
-              style: Theme.of(context).textTheme.titleLarge),
+          Text('Approval Queue', style: Theme.of(context).textTheme.titleLarge),
           const SizedBox(height: 8),
           if (integration.queue.isEmpty)
             const Card(

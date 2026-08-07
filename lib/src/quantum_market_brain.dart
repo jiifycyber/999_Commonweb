@@ -174,10 +174,8 @@ class QuantumMarketBrain {
     final previous = candles[candles.length - 2];
     final twoBack = candles[candles.length - 3];
 
-    final sweptLow =
-        last.low < support && last.close > support;
-    final sweptHigh =
-        last.high > resistance && last.close < resistance;
+    final sweptLow = last.low < support && last.close > support;
+    final sweptHigh = last.high > resistance && last.close < resistance;
 
     if (sweptLow) {
       out.add(const InstitutionalSignal(
@@ -217,8 +215,7 @@ class QuantumMarketBrain {
 
     final bullishBos =
         last.close > previous.high && previous.high > twoBack.high;
-    final bearishBos =
-        last.close < previous.low && previous.low < twoBack.low;
+    final bearishBos = last.close < previous.low && previous.low < twoBack.low;
     if (bullishBos) {
       out.add(const InstitutionalSignal(
         name: 'Break of Structure',

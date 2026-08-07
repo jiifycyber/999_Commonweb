@@ -23,15 +23,21 @@ const demoMarketAssets = <DemoMarketAsset>[
   DemoMarketAsset('Forex Cross', 'GBP/JPY', 'British Pound / Japanese Yen'),
   DemoMarketAsset('Forex Cross', 'GBP/CHF', 'British Pound / Swiss Franc'),
   DemoMarketAsset('Forex Cross', 'GBP/CAD', 'British Pound / Canadian Dollar'),
-  DemoMarketAsset('Forex Cross', 'GBP/AUD', 'British Pound / Australian Dollar'),
-  DemoMarketAsset('Forex Cross', 'GBP/NZD', 'British Pound / New Zealand Dollar'),
+  DemoMarketAsset(
+      'Forex Cross', 'GBP/AUD', 'British Pound / Australian Dollar'),
+  DemoMarketAsset(
+      'Forex Cross', 'GBP/NZD', 'British Pound / New Zealand Dollar'),
   DemoMarketAsset('Forex Cross', 'AUD/JPY', 'Australian Dollar / Japanese Yen'),
   DemoMarketAsset('Forex Cross', 'AUD/CHF', 'Australian Dollar / Swiss Franc'),
-  DemoMarketAsset('Forex Cross', 'AUD/CAD', 'Australian Dollar / Canadian Dollar'),
-  DemoMarketAsset('Forex Cross', 'AUD/NZD', 'Australian Dollar / New Zealand Dollar'),
-  DemoMarketAsset('Forex Cross', 'NZD/JPY', 'New Zealand Dollar / Japanese Yen'),
+  DemoMarketAsset(
+      'Forex Cross', 'AUD/CAD', 'Australian Dollar / Canadian Dollar'),
+  DemoMarketAsset(
+      'Forex Cross', 'AUD/NZD', 'Australian Dollar / New Zealand Dollar'),
+  DemoMarketAsset(
+      'Forex Cross', 'NZD/JPY', 'New Zealand Dollar / Japanese Yen'),
   DemoMarketAsset('Forex Cross', 'NZD/CHF', 'New Zealand Dollar / Swiss Franc'),
-  DemoMarketAsset('Forex Cross', 'NZD/CAD', 'New Zealand Dollar / Canadian Dollar'),
+  DemoMarketAsset(
+      'Forex Cross', 'NZD/CAD', 'New Zealand Dollar / Canadian Dollar'),
   DemoMarketAsset('Forex Cross', 'CAD/JPY', 'Canadian Dollar / Japanese Yen'),
   DemoMarketAsset('Forex Cross', 'CAD/CHF', 'Canadian Dollar / Swiss Franc'),
   DemoMarketAsset('Forex Cross', 'CHF/JPY', 'Swiss Franc / Japanese Yen'),
@@ -77,8 +83,10 @@ const demoMarketAssets = <DemoMarketAsset>[
   DemoMarketAsset('Currency ETF', 'FXY', 'CurrencyShares Japanese Yen Trust'),
   DemoMarketAsset('Currency ETF', 'FXF', 'CurrencyShares Swiss Franc Trust'),
   DemoMarketAsset('Currency ETF', 'FXB', 'CurrencyShares British Pound Trust'),
-  DemoMarketAsset('Currency ETF', 'FXA', 'CurrencyShares Australian Dollar Trust'),
-  DemoMarketAsset('Currency ETF', 'FXC', 'CurrencyShares Canadian Dollar Trust'),
+  DemoMarketAsset(
+      'Currency ETF', 'FXA', 'CurrencyShares Australian Dollar Trust'),
+  DemoMarketAsset(
+      'Currency ETF', 'FXC', 'CurrencyShares Canadian Dollar Trust'),
   DemoMarketAsset('Currency ETF', 'UUP', 'US Dollar Index Bullish Fund'),
   DemoMarketAsset('Currency ETF', 'UDN', 'US Dollar Index Bearish Fund'),
   DemoMarketAsset('Currency ETF', 'USDU', 'U.S. Dollar Bullish Fund'),

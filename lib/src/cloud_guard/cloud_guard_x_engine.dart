@@ -22,7 +22,7 @@ class CloudGuardXEngine {
 
     final directionAligned =
         (titan.direction == SignalDirection.call && market.momentum > 0) ||
-        (titan.direction == SignalDirection.put && market.momentum < 0);
+            (titan.direction == SignalDirection.put && market.momentum < 0);
 
     if (trendScore >= .60) confirmations.add('Trend separation confirmed');
     if (momentumScore >= .60) confirmations.add('Momentum confirmed');
@@ -30,11 +30,10 @@ class CloudGuardXEngine {
     if (volatilityQuality >= .55) confirmations.add('Volatility is suitable');
     if (directionAligned) confirmations.add('Titan direction is aligned');
 
-    final riskScore = (
-      (market.volatility > .78 ? .45 : .10) +
-      (activityScore < .35 ? .25 : 0) +
-      (titan.confidence < 75 ? .20 : 0)
-    ).clamp(0.0, 1.0);
+    final riskScore = ((market.volatility > .78 ? .45 : .10) +
+            (activityScore < .35 ? .25 : 0) +
+            (titan.confidence < 75 ? .20 : 0))
+        .clamp(0.0, 1.0);
 
     if (riskScore > .45) warnings.add('Risk conditions are elevated');
     if (titan.direction == SignalDirection.wait) {
@@ -42,18 +41,19 @@ class CloudGuardXEngine {
     }
 
     final titanScore = (titan.confidence / 100).clamp(0.0, 1.0);
-    final entryQuality = (
-      titanScore * .30 +
-      trendScore * .20 +
-      momentumScore * .20 +
-      activityScore * .12 +
-      volatilityQuality * .18
-    ).clamp(0.0, 1.0);
+    final entryQuality = (titanScore * .30 +
+            trendScore * .20 +
+            momentumScore * .20 +
+            activityScore * .12 +
+            volatilityQuality * .18)
+        .clamp(0.0, 1.0);
 
     CloudGuardEntryStatus status;
     if (titan.direction == SignalDirection.wait || riskScore >= maxRiskScore) {
       status = CloudGuardEntryStatus.wait;
-    } else if (entryQuality >= .88 && titan.confidence >= 82 && directionAligned) {
+    } else if (entryQuality >= .88 &&
+        titan.confidence >= 82 &&
+        directionAligned) {
       status = CloudGuardEntryStatus.enterNow;
     } else if (entryQuality >= .70 && titan.confidence >= 72) {
       status = CloudGuardEntryStatus.armed;

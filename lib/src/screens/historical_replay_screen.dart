@@ -4,6 +4,7 @@ import '../historical_replay_controller.dart';
 import '../market_data/twelve_data_service.dart';
 import '../theme.dart';
 import '../widgets/egypt_widgets.dart';
+import '../widgets/universal_back_button.dart';
 
 class HistoricalReplayScreen extends StatefulWidget {
   const HistoricalReplayScreen({super.key});
@@ -40,7 +41,10 @@ class _HistoricalReplayScreenState extends State<HistoricalReplayScreen> {
     final replay = context.watch<HistoricalReplayController>();
     final current = replay.current;
     return Scaffold(
-      appBar: AppBar(title: const Text('HISTORICAL MARKET REPLAY')),
+      appBar: AppBar(
+          automaticallyImplyLeading: false,
+          leading: const UniversalBackButton(),
+          title: const Text('HISTORICAL MARKET REPLAY')),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [

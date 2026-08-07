@@ -17,11 +17,16 @@ class _DemoMarketScreenState extends State<DemoMarketScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final categories = <String>['All', ...{for (final a in demoMarketAssets) a.category}];
+    final categories = <String>[
+      'All',
+      ...{for (final a in demoMarketAssets) a.category}
+    ];
     final q = query.toLowerCase().trim();
     final visible = demoMarketAssets.where((a) {
       final c = category == 'All' || a.category == category;
-      final s = q.isEmpty || a.symbol.toLowerCase().contains(q) || a.name.toLowerCase().contains(q);
+      final s = q.isEmpty ||
+          a.symbol.toLowerCase().contains(q) ||
+          a.name.toLowerCase().contains(q);
       return c && s;
     }).toList();
 
@@ -36,7 +41,9 @@ class _DemoMarketScreenState extends State<DemoMarketScreen> {
               prefixIcon: const Icon(Icons.search_rounded),
               filled: true,
               fillColor: TradeXColors.panel,
-              border: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide.none),
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: BorderSide.none),
             ),
           ),
         ),
@@ -45,14 +52,16 @@ class _DemoMarketScreenState extends State<DemoMarketScreen> {
           child: ListView(
             scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.symmetric(horizontal: 10),
-            children: categories.map((c) => Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 3),
-              child: ChoiceChip(
-                label: Text(c),
-                selected: category == c,
-                onSelected: (_) => setState(() => category = c),
-              ),
-            )).toList(),
+            children: categories
+                .map((c) => Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 3),
+                      child: ChoiceChip(
+                        label: Text(c),
+                        selected: category == c,
+                        onSelected: (_) => setState(() => category = c),
+                      ),
+                    ))
+                .toList(),
           ),
         ),
         Expanded(
@@ -65,12 +74,16 @@ class _DemoMarketScreenState extends State<DemoMarketScreen> {
               return XGlassPanel(
                 padding: EdgeInsets.zero,
                 child: ListTile(
-                  leading: const Icon(Icons.candlestick_chart_rounded, color: TradeXColors.cyan),
-                  title: Text(asset.symbol, style: const TextStyle(fontWeight: FontWeight.w900)),
+                  leading: const Icon(Icons.candlestick_chart_rounded,
+                      color: TradeXColors.cyan),
+                  title: Text(asset.symbol,
+                      style: const TextStyle(fontWeight: FontWeight.w900)),
                   subtitle: Text('${asset.category} • ${asset.name}'),
                   trailing: const Icon(Icons.chevron_right_rounded),
                   onTap: () => Navigator.of(context).push(
-                    MaterialPageRoute(builder: (_) => ProfessionalChartScreen(initialSymbol: asset.symbol)),
+                    MaterialPageRoute(
+                        builder: (_) => ProfessionalChartScreen(
+                            initialSymbol: asset.symbol)),
                   ),
                 ),
               );

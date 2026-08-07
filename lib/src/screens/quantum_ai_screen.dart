@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../market_radar_controller.dart';
 import '../theme.dart';
 import '../widgets/egypt_widgets.dart';
+import '../widgets/universal_back_button.dart';
 
 class QuantumAiScreen extends StatelessWidget {
   const QuantumAiScreen({super.key});
@@ -13,7 +14,10 @@ class QuantumAiScreen extends StatelessWidget {
     final best = radar.bestOpportunity;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('TradeX Intelligence')),
+      appBar: AppBar(
+          automaticallyImplyLeading: false,
+          leading: const UniversalBackButton(),
+          title: const Text('TradeX Intelligence')),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [

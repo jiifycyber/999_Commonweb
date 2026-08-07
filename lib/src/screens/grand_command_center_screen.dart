@@ -10,6 +10,7 @@ import 'stage5_integration_screen.dart';
 import 'strategy_lab_screen.dart';
 import 'market_radar_screen.dart';
 import 'learning_center_screen.dart';
+import '../widgets/universal_back_button.dart';
 
 class GrandCommandCenterScreen extends StatelessWidget {
   const GrandCommandCenterScreen({super.key});
@@ -21,7 +22,10 @@ class GrandCommandCenterScreen extends StatelessWidget {
     final integration = context.watch<IntegrationController>();
 
     return Scaffold(
-      appBar: AppBar(title: const Text('TradeX AI — GRAND BUILD')),
+      appBar: AppBar(
+          automaticallyImplyLeading: false,
+          leading: const UniversalBackButton(),
+          title: const Text('TradeX AI — GRAND BUILD')),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
@@ -98,8 +102,8 @@ class GrandCommandCenterScreen extends StatelessWidget {
                 context,
                 icon: Icons.hub,
                 title: 'Integration',
-                subtitle: integration.connectorStatus?.message ??
-                    'Connector locked',
+                subtitle:
+                    integration.connectorStatus?.message ?? 'Connector locked',
                 onTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -133,8 +137,7 @@ class GrandCommandCenterScreen extends StatelessWidget {
                 context,
                 icon: Icons.analytics,
                 title: 'Performance',
-                subtitle:
-                    'P/L \$${app.dailyProfit.toStringAsFixed(2)} today',
+                subtitle: 'P/L \$${app.dailyProfit.toStringAsFixed(2)} today',
                 onTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(builder: (_) => const JournalScreen()),
@@ -183,8 +186,7 @@ class GrandCommandCenterScreen extends StatelessWidget {
               children: [
                 Icon(icon, size: 34),
                 const SizedBox(height: 16),
-                Text(title,
-                    style: Theme.of(context).textTheme.titleMedium),
+                Text(title, style: Theme.of(context).textTheme.titleMedium),
                 const SizedBox(height: 5),
                 Text(subtitle),
               ],

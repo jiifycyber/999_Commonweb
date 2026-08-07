@@ -23,7 +23,8 @@ class StrategyBuilderController extends ChangeNotifier {
     const StrategyDefinition(
       name: 'Titan Quantum Sniper',
       conditions: [
-        StrategyCondition(left: 'EMA 20', operatorSymbol: '>', right: 'EMA 200'),
+        StrategyCondition(
+            left: 'EMA 20', operatorSymbol: '>', right: 'EMA 200'),
         StrategyCondition(left: 'RSI', operatorSymbol: '>=', right: '55'),
         StrategyCondition(left: 'MACD', operatorSymbol: '>', right: 'Signal'),
         StrategyCondition(
@@ -31,7 +32,8 @@ class StrategyBuilderController extends ChangeNotifier {
           operatorSymbol: '==',
           right: 'CALL',
         ),
-        StrategyCondition(left: 'Confidence', operatorSymbol: '>=', right: '82'),
+        StrategyCondition(
+            left: 'Confidence', operatorSymbol: '>=', right: '82'),
       ],
       action: 'CALL',
       minimumConfidence: 82,

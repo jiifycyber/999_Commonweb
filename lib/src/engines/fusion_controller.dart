@@ -47,11 +47,10 @@ class InfinityFusionController {
       finalAction = 'ARMED';
     }
 
-    final fusionConfidence = (
-      (titan.confidence / 100) * .48 +
-      cloud.entryQuality * .42 +
-      (1 - cloud.riskScore) * .10
-    ).clamp(0.0, 1.0);
+    final fusionConfidence = ((titan.confidence / 100) * .48 +
+            cloud.entryQuality * .42 +
+            (1 - cloud.riskScore) * .10)
+        .clamp(0.0, 1.0);
 
     return FusionDecision(
       titan: titan,

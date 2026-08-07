@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../grand_build_controller.dart';
 import '../stage6_models.dart';
+import '../widgets/universal_back_button.dart';
 
 class StrategyLabScreen extends StatelessWidget {
   const StrategyLabScreen({super.key});
@@ -20,7 +21,10 @@ class StrategyLabScreen extends StatelessWidget {
     final report = grand.report;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Titan Strategy Lab')),
+      appBar: AppBar(
+          automaticallyImplyLeading: false,
+          leading: const UniversalBackButton(),
+          title: const Text('Titan Strategy Lab')),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
@@ -46,7 +50,8 @@ class StrategyLabScreen extends StatelessWidget {
                     onChanged: (v) {
                       if (v != null) grand.setSymbol(v);
                     },
-                    decoration: const InputDecoration(labelText: 'Currency pair'),
+                    decoration:
+                        const InputDecoration(labelText: 'Currency pair'),
                   ),
                   const SizedBox(height: 12),
                   DropdownButtonFormField<StrategyPreset>(
@@ -92,8 +97,7 @@ class StrategyLabScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   FilledButton.icon(
-                    onPressed:
-                        grand.isRunning ? null : grand.runDemoBacktest,
+                    onPressed: grand.isRunning ? null : grand.runDemoBacktest,
                     icon: const Icon(Icons.science),
                     label: Text(
                       grand.isRunning
@@ -115,8 +119,7 @@ class StrategyLabScreen extends StatelessWidget {
                 _metric('Win Rate', '${report.winRate.toStringAsFixed(1)}%'),
                 _metric('Wins', '${report.wins}'),
                 _metric('Losses', '${report.losses}'),
-                _metric('Longest Loss Streak',
-                    '${report.longestLosingStreak}'),
+                _metric('Longest Loss Streak', '${report.longestLosingStreak}'),
               ],
             ),
             const SizedBox(height: 16),
@@ -136,8 +139,7 @@ class StrategyLabScreen extends StatelessWidget {
                         dense: true,
                         contentPadding: EdgeInsets.zero,
                         title: Text(sessionName(entry.key)),
-                        trailing:
-                            Text('${entry.value.toStringAsFixed(1)}%'),
+                        trailing: Text('${entry.value.toStringAsFixed(1)}%'),
                       ),
                     ),
                   ],

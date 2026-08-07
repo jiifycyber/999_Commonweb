@@ -19,9 +19,9 @@ class AdvancedIndicators {
     if (values.isEmpty) return [];
     final out = List<double>.filled(values.length, values.first);
     final k = 2 / (period + 1);
-    double current = values.take(min(period, values.length))
-            .reduce((a, b) => a + b) /
-        min(period, values.length);
+    double current =
+        values.take(min(period, values.length)).reduce((a, b) => a + b) /
+            min(period, values.length);
     for (int i = 0; i < values.length; i++) {
       if (i < period - 1) {
         out[i] = values[i];

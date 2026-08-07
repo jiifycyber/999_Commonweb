@@ -4,6 +4,7 @@ import '../indicator_consensus_controller.dart';
 import '../indicators/titan_indicator_pack_250.dart';
 import '../theme.dart';
 import '../widgets/egypt_widgets.dart';
+import '../widgets/universal_back_button.dart';
 
 class UniversalIndicatorScreen extends StatefulWidget {
   const UniversalIndicatorScreen({super.key});
@@ -39,6 +40,8 @@ class _UniversalIndicatorScreenState extends State<UniversalIndicatorScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: const UniversalBackButton(),
         title: const Text('250 INDICATOR ENGINE'),
         actions: [
           Center(

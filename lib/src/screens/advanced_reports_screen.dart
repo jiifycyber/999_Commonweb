@@ -4,6 +4,7 @@ import '../app_state.dart';
 import '../performance_analytics.dart';
 import '../theme.dart';
 import '../widgets/egypt_widgets.dart';
+import '../widgets/universal_back_button.dart';
 
 class AdvancedReportsScreen extends StatelessWidget {
   const AdvancedReportsScreen({super.key});
@@ -14,7 +15,10 @@ class AdvancedReportsScreen extends StatelessWidget {
     final report = PerformanceAnalytics().build(app.trades);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('ADVANCED PERFORMANCE REPORTS')),
+      appBar: AppBar(
+          automaticallyImplyLeading: false,
+          leading: const UniversalBackButton(),
+          title: const Text('ADVANCED PERFORMANCE REPORTS')),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [

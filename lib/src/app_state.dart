@@ -67,8 +67,7 @@ class TradeXAppState extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final result =
-          await _liveData.fetchOneMinuteCandles(selectedSymbol);
+      final result = await _liveData.fetchOneMinuteCandles(selectedSymbol);
       liveCandles = List<LiveCandle>.from(result.candles);
       final closes = liveCandles.map((c) => c.close).toList();
 
@@ -78,8 +77,7 @@ class TradeXAppState extends ChangeNotifier {
         ema20: TwelveDataService.ema(closes, 20),
         ema200: TwelveDataService.ema(closes, 200),
         momentum: TwelveDataService.momentum(closes),
-        volumeStrength:
-            TwelveDataService.activityStrength(result.candles),
+        volumeStrength: TwelveDataService.activityStrength(result.candles),
         volatility: TwelveDataService.volatility(result.candles),
         payout: payout,
         time: result.candles.last.time.toLocal(),

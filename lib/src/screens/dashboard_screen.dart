@@ -8,6 +8,7 @@ import 'settings_screen.dart';
 import 'stage5_integration_screen.dart';
 import '../integration/integration_controller.dart';
 import '../integration/connector_models.dart';
+import '../widgets/universal_back_button.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
@@ -31,6 +32,8 @@ class DashboardScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: const UniversalBackButton(),
         title: const Text('TITAN LIVE COMMAND CENTER'),
         actions: [
           IconButton(
@@ -68,10 +71,12 @@ class DashboardScreen extends StatelessWidget {
               spacing: 12,
               runSpacing: 12,
               children: [
-                _stat('Data', app.liveDataConfigured ? 'LIVE READY' : 'KEY NEEDED'),
+                _stat('Data',
+                    app.liveDataConfigured ? 'LIVE READY' : 'KEY NEEDED'),
                 _stat('Win Rate', '${app.winRate.toStringAsFixed(1)}%'),
                 _stat('Daily P/L', '\$${app.dailyProfit.toStringAsFixed(2)}'),
-                _stat('Trades Today', '${app.tradesToday}/${app.maxTradesPerDay}'),
+                _stat('Trades Today',
+                    '${app.tradesToday}/${app.maxTradesPerDay}'),
               ],
             ),
             const SizedBox(height: 16),
@@ -92,12 +97,14 @@ class DashboardScreen extends StatelessWidget {
                     const Text('Real Forex Market Scanner'),
                     const SizedBox(height: 8),
                     Text('Source: ${app.dataSource}'),
-                    Text('Last fetch: ${app.lastMarketUpdateUtc == null ? "—" : formatTime(app.lastMarketUpdateUtc!.toLocal())}'),
+                    Text(
+                        'Last fetch: ${app.lastMarketUpdateUtc == null ? "—" : formatTime(app.lastMarketUpdateUtc!.toLocal())}'),
                     const SizedBox(height: 14),
                     DropdownButtonFormField<String>(
                       initialValue: app.selectedSymbol,
                       items: app.symbols
-                          .map((s) => DropdownMenuItem(value: s, child: Text(s)))
+                          .map(
+                              (s) => DropdownMenuItem(value: s, child: Text(s)))
                           .toList(),
                       onChanged: (v) {
                         if (v != null) app.setSymbol(v);
@@ -111,8 +118,10 @@ class DashboardScreen extends StatelessWidget {
                       Text('EMA 200: ${market.ema200.toStringAsFixed(5)}'),
                       Text('Payout setting: ${market.payout}%'),
                       Text('Momentum: ${market.momentum.toStringAsFixed(2)}'),
-                      Text('Market activity: ${market.volumeStrength.toStringAsFixed(2)}'),
-                      Text('Volatility: ${market.volatility.toStringAsFixed(2)}'),
+                      Text(
+                          'Market activity: ${market.volumeStrength.toStringAsFixed(2)}'),
+                      Text(
+                          'Volatility: ${market.volatility.toStringAsFixed(2)}'),
                     ],
                     const SizedBox(height: 12),
                     FilledButton.icon(
@@ -124,7 +133,8 @@ class DashboardScreen extends StatelessWidget {
                               child: CircularProgressIndicator(strokeWidth: 2),
                             )
                           : const Icon(Icons.radar),
-                      label: Text(app.isLoading ? 'Scanning...' : 'Scan Live Market'),
+                      label: Text(
+                          app.isLoading ? 'Scanning...' : 'Scan Live Market'),
                     ),
                   ],
                 ),
@@ -143,15 +153,19 @@ class DashboardScreen extends StatelessWidget {
                         style: Theme.of(context).textTheme.headlineMedium,
                       ),
                       Text('Confidence: ${signal.confidence}%'),
-                      Text('Expiration length: ${signal.expirationMinutes} minute(s)'),
-                      Text('Suggested amount: \$${signal.suggestedAmount.toStringAsFixed(2)}'),
+                      Text(
+                          'Expiration length: ${signal.expirationMinutes} minute(s)'),
+                      Text(
+                          'Suggested amount: \$${signal.suggestedAmount.toStringAsFixed(2)}'),
                       const SizedBox(height: 14),
                       Container(
                         width: double.infinity,
                         padding: const EdgeInsets.all(14),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(14),
-                          color: Theme.of(context).colorScheme.surfaceContainerHighest,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .surfaceContainerHighest,
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -162,8 +176,10 @@ class DashboardScreen extends StatelessWidget {
                             ),
                             const SizedBox(height: 6),
                             Text('Entry time: ${formatTime(app.entryTime)}'),
-                            Text('Entry window ends: ${formatTime(app.entryWindowEnd)}'),
-                            Text('Expiration time: ${formatTime(app.expirationTime)}'),
+                            Text(
+                                'Entry window ends: ${formatTime(app.entryWindowEnd)}'),
+                            Text(
+                                'Expiration time: ${formatTime(app.expirationTime)}'),
                           ],
                         ),
                       ),
@@ -183,20 +199,21 @@ class DashboardScreen extends StatelessWidget {
                             : () {
                                 app.approveSignal();
                                 context.read<IntegrationController>().enqueue(
-                                  ExecutionRequest(
-                                    id: DateTime.now()
-                                        .microsecondsSinceEpoch
-                                        .toString(),
-                                    symbol: signal.symbol,
-                                    direction: directionName(signal.direction),
-                                    amount: signal.suggestedAmount,
-                                    expirationMinutes:
-                                        signal.expirationMinutes,
-                                    confidence: signal.confidence,
-                                    approved: false,
-                                    createdAt: DateTime.now(),
-                                  ),
-                                );
+                                      ExecutionRequest(
+                                        id: DateTime.now()
+                                            .microsecondsSinceEpoch
+                                            .toString(),
+                                        symbol: signal.symbol,
+                                        direction:
+                                            directionName(signal.direction),
+                                        amount: signal.suggestedAmount,
+                                        expirationMinutes:
+                                            signal.expirationMinutes,
+                                        confidence: signal.confidence,
+                                        approved: false,
+                                        createdAt: DateTime.now(),
+                                      ),
+                                    );
                               },
                         icon: const Icon(Icons.verified_user),
                         label: const Text('Send to Approval Queue'),

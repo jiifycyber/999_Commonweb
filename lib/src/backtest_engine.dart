@@ -37,17 +37,14 @@ class BacktestEngine {
 
       final trendUp = fastNow > slowNow;
       final trendDown = fastNow < slowNow;
-      final aligned =
-          (trendUp && momentum > 0) || (trendDown && momentum < 0);
+      final aligned = (trendUp && momentum > 0) || (trendDown && momentum < 0);
       if (!aligned) continue;
 
       int confidence = 45;
-      confidence += ((momentum.abs() - preset.minimumMomentum) * 30)
-          .clamp(0, 18)
-          .round();
-      confidence += ((volume - preset.minimumVolumeStrength) * 30)
-          .clamp(0, 15)
-          .round();
+      confidence +=
+          ((momentum.abs() - preset.minimumMomentum) * 30).clamp(0, 18).round();
+      confidence +=
+          ((volume - preset.minimumVolumeStrength) * 30).clamp(0, 15).round();
       confidence += 12;
       if (session == MarketSession.overlap) confidence += 8;
       confidence = confidence.clamp(0, 100);

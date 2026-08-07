@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import '../advanced_models.dart';
 import '../market_radar_controller.dart';
+import '../widgets/universal_back_button.dart';
 
 class MarketRadarScreen extends StatelessWidget {
   const MarketRadarScreen({super.key});
@@ -12,7 +13,10 @@ class MarketRadarScreen extends StatelessWidget {
     final radar = context.watch<MarketRadarController>();
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Titan Multi-Pair Market Radar')),
+      appBar: AppBar(
+          automaticallyImplyLeading: false,
+          leading: const UniversalBackButton(),
+          title: const Text('Titan Multi-Pair Market Radar')),
       body: RefreshIndicator(
         onRefresh: radar.scanAll,
         child: ListView(
@@ -38,8 +42,7 @@ class MarketRadarScreen extends StatelessWidget {
                           ? const SizedBox(
                               width: 18,
                               height: 18,
-                              child:
-                                  CircularProgressIndicator(strokeWidth: 2),
+                              child: CircularProgressIndicator(strokeWidth: 2),
                             )
                           : const Icon(Icons.radar),
                       label: Text(

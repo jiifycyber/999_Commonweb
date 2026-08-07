@@ -19,6 +19,7 @@ import 'strategy_builder_screen.dart';
 import 'historical_replay_screen.dart';
 import 'advanced_reports_screen.dart';
 import 'quantum_assistant_screen.dart';
+import '../widgets/universal_back_button.dart';
 
 class AncientEgyptCommandCenter extends StatelessWidget {
   const AncientEgyptCommandCenter({super.key});
@@ -193,9 +194,17 @@ class AncientEgyptCommandCenter extends StatelessWidget {
       (Icons.psychology, 'SpiderTrend AI', const MarketRadarScreen()),
       (Icons.auto_awesome, 'Quantum AI', const QuantumAiScreen()),
       (Icons.account_tree, 'Strategy Builder', const StrategyBuilderScreen()),
-      (Icons.replay_circle_filled, 'Historical Replay', const HistoricalReplayScreen()),
+      (
+        Icons.replay_circle_filled,
+        'Historical Replay',
+        const HistoricalReplayScreen()
+      ),
       (Icons.insights, 'Advanced Reports', const AdvancedReportsScreen()),
-      (Icons.record_voice_over, 'Quantum Assistant', const QuantumAssistantScreen()),
+      (
+        Icons.record_voice_over,
+        'Quantum Assistant',
+        const QuantumAssistantScreen()
+      ),
       (Icons.candlestick_chart, 'Chart Station', const DashboardScreen()),
       (Icons.tune, 'Indicators', const UniversalIndicatorScreen()),
       (Icons.auto_awesome, 'Quantum AI', const QuantumAiScreen()),
@@ -460,8 +469,7 @@ class AncientEgyptCommandCenter extends StatelessWidget {
           _kv('Entry status', app.entryStatus),
           _kv('Suggested amount',
               '\$${app.signal?.suggestedAmount.toStringAsFixed(2) ?? "0.00"}'),
-          _kv('Expiration',
-              '${app.signal?.expirationMinutes ?? 0} minute(s)'),
+          _kv('Expiration', '${app.signal?.expirationMinutes ?? 0} minute(s)'),
           const SizedBox(height: 10),
           FilledButton.icon(
             onPressed: null,
