@@ -27,7 +27,6 @@ import 'demo_trading_terminal_screen.dart';
 import 'opportunity_scanner_screen.dart';
 import 'automated_analysis_screen.dart';
 import 'login_screen.dart';
-import '../widgets/universal_back_button.dart';
 
 class TradeXShell extends StatefulWidget {
   const TradeXShell({super.key});
