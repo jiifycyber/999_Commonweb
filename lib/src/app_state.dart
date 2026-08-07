@@ -22,6 +22,10 @@ class TradeXAppState extends ChangeNotifier {
 
   MarketSnapshot? market;
   TitanSignal? signal;
+
+  // Actual candles returned by Twelve Data.
+  List<LiveCandle> liveCandles = [];
+
   final List<TradeRecord> trades = [];
 
   bool isLoading = false;
@@ -65,7 +69,8 @@ class TradeXAppState extends ChangeNotifier {
     try {
       final result =
           await _liveData.fetchOneMinuteCandles(selectedSymbol);
-      final closes = result.candles.map((c) => c.close).toList();
+      liveCandles = List<LiveCandle>.from(result.candles);
+      final closes = liveCandles.map((c) => c.close).toList();
 
       market = MarketSnapshot(
         symbol: selectedSymbol,
@@ -87,6 +92,7 @@ class TradeXAppState extends ChangeNotifier {
     } catch (error) {
       market = null;
       signal = null;
+      liveCandles = [];
       entryTime = null;
       entryWindowEnd = null;
       expirationTime = null;

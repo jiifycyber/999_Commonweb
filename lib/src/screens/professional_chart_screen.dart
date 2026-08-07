@@ -1,4 +1,3 @@
-import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -80,7 +79,14 @@ class _ProfessionalChartScreenState extends State<ProfessionalChartScreen> {
             height: 430,
             child: Stack(
               children: [
-                const Positioned.fill(child: CustomPaint(painter: _InfinityChartPainter())),
+                Positioned.fill(
+                  child: CustomPaint(
+                    painter: _InfinityChartPainter(
+                      candles: app.liveCandles,
+                      showEma: showEma,
+                    ),
+                  ),
+                ),
                 Positioned(
                   left: 18,
                   top: 16,
@@ -171,54 +177,161 @@ class _ProfessionalChartScreenState extends State<ProfessionalChartScreen> {
 }
 
 class _InfinityChartPainter extends CustomPainter {
-  const _InfinityChartPainter();
+  final List<LiveCandle> candles;
+  final bool showEma;
+
+  const _InfinityChartPainter({
+    required this.candles,
+    required this.showEma,
+  });
 
   @override
   void paint(Canvas canvas, Size size) {
-    final grid = Paint()..color = const Color(0xFF213147)..strokeWidth = .8;
+    final grid = Paint()
+      ..color = const Color(0xFF213147)
+      ..strokeWidth = .8;
+
     for (var i = 1; i < 6; i++) {
       final y = size.height * i / 6;
       canvas.drawLine(Offset(0, y), Offset(size.width, y), grid);
     }
+
     for (var i = 1; i < 9; i++) {
       final x = size.width * i / 9;
       canvas.drawLine(Offset(x, 0), Offset(x, size.height), grid);
     }
 
-    final random = math.Random(41);
-    var y = size.height * .68;
-    final step = size.width / 38;
-    for (var i = 0; i < 34; i++) {
-      final x = 20 + i * step;
-      final delta = (random.nextDouble() - .43) * 28;
-      final open = y;
-      final close = (open - delta).clamp(50.0, size.height - 55);
-      final high = math.min(open, close) - 6 - random.nextDouble() * 12;
-      final low = math.max(open, close) + 6 + random.nextDouble() * 12;
-      final up = close < open;
-      final paint = Paint()
-        ..color = up ? TradeXColors.green : const Color(0xFFFF5263)
-        ..strokeWidth = 1.4;
-      canvas.drawLine(Offset(x, high), Offset(x, low), paint);
-      final top = math.min(open, close);
-      final h = math.max(4.0, (open - close).abs());
-      canvas.drawRect(Rect.fromLTWH(x - step * .22, top, step * .44, h), paint);
-      y = close;
+    if (candles.isEmpty) {
+      final tp = TextPainter(
+        text: const TextSpan(
+          text: 'WAITING FOR TWELVE DATA...',
+          style: TextStyle(
+            color: TradeXColors.muted,
+            fontSize: 13,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        textDirection: TextDirection.ltr,
+      )..layout();
+
+      tp.paint(
+        canvas,
+        Offset(
+          (size.width - tp.width) / 2,
+          (size.height - tp.height) / 2,
+        ),
+      );
+      return;
     }
 
-    final ema = Paint()
-      ..color = TradeXColors.cyan
-      ..strokeWidth = 2.3
-      ..style = PaintingStyle.stroke;
-    final p = Path();
-    for (var i = 0; i < 34; i++) {
-      final x = 20 + i * step;
-      final yy = size.height * (.70 - i * .008) + math.sin(i / 3.5) * 13;
-      if (i == 0) p.moveTo(x, yy); else p.lineTo(x, yy);
+    // Show latest candles.
+    final visible = candles.length > 60
+        ? candles.sublist(candles.length - 60)
+        : candles;
+
+    double minPrice = visible.first.low;
+    double maxPrice = visible.first.high;
+
+    for (final c in visible) {
+      if (c.low < minPrice) minPrice = c.low;
+      if (c.high > maxPrice) maxPrice = c.high;
     }
-    canvas.drawPath(p, ema);
+
+    var range = maxPrice - minPrice;
+    if (range <= 0) range = 1;
+
+    const leftPad = 18.0;
+    const rightPad = 18.0;
+    const topPad = 55.0;
+    const bottomPad = 45.0;
+
+    final chartWidth = size.width - leftPad - rightPad;
+    final chartHeight = size.height - topPad - bottomPad;
+    final step = chartWidth / visible.length;
+
+    double priceY(double price) {
+      return topPad +
+          ((maxPrice - price) / range) * chartHeight;
+    }
+
+    for (var i = 0; i < visible.length; i++) {
+      final c = visible[i];
+      final x = leftPad + (i + .5) * step;
+
+      final openY = priceY(c.open);
+      final closeY = priceY(c.close);
+      final highY = priceY(c.high);
+      final lowY = priceY(c.low);
+
+      final bullish = c.close >= c.open;
+
+      final paint = Paint()
+        ..color = bullish
+            ? TradeXColors.green
+            : const Color(0xFFFF5263)
+        ..strokeWidth = 1.4;
+
+      canvas.drawLine(
+        Offset(x, highY),
+        Offset(x, lowY),
+        paint,
+      );
+
+      final top = openY < closeY ? openY : closeY;
+      final bodyHeight =
+          (openY - closeY).abs().clamp(2.0, chartHeight);
+
+      canvas.drawRect(
+        Rect.fromLTWH(
+          x - step * .28,
+          top,
+          step * .56,
+          bodyHeight,
+        ),
+        paint,
+      );
+    }
+
+    if (showEma && visible.length >= 20) {
+      final closes = visible.map((e) => e.close).toList();
+
+      final emaPaint = Paint()
+        ..color = TradeXColors.cyan
+        ..strokeWidth = 2.2
+        ..style = PaintingStyle.stroke;
+
+      final path = Path();
+      double? previousEma;
+      const period = 20;
+      const multiplier = 2 / (period + 1);
+
+      for (var i = 0; i < closes.length; i++) {
+        if (previousEma == null) {
+          previousEma = closes[i];
+        } else {
+          previousEma =
+              (closes[i] - previousEma) * multiplier +
+              previousEma;
+        }
+
+        final x = leftPad + (i + .5) * step;
+        final y = priceY(previousEma);
+
+        if (i == 0) {
+          path.moveTo(x, y);
+        } else {
+          path.lineTo(x, y);
+        }
+      }
+
+      canvas.drawPath(path, emaPaint);
+    }
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+  bool shouldRepaint(covariant _InfinityChartPainter oldDelegate) {
+    return oldDelegate.candles != candles ||
+        oldDelegate.showEma != showEma;
+  }
 }
+
