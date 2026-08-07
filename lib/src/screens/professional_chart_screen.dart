@@ -2,19 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../app_state.dart';
+import '../market_data/twelve_data_service.dart';
 import '../cloud_guard/cloud_guard_models.dart';
 import '../cloud_guard/cloud_guard_x_engine.dart';
 import '../models.dart';
 import '../theme.dart';
 import '../widgets/tradex_widgets.dart';
-import '../widgets/universal_back_button.dart';
-
-enum ProChartType {
-  candles,
-  heikinAshi,
-  bars,
-  line,
-}
 
 class ProfessionalChartScreen extends StatefulWidget {
   final String? initialSymbol;
@@ -28,7 +21,6 @@ class ProfessionalChartScreen extends StatefulWidget {
 class _ProfessionalChartScreenState extends State<ProfessionalChartScreen> {
   String timeframe = '1m';
   bool showEma = true;
-  ProChartType _chartType = ProChartType.candles;
   bool showEntryZone = true;
 
   // Interactive chart controls
@@ -85,10 +77,6 @@ class _ProfessionalChartScreenState extends State<ProfessionalChartScreen> {
       child: ListView(
         padding: const EdgeInsets.all(14),
         children: [
-          const Align(
-            alignment: Alignment.centerLeft,
-            child: UniversalBackButton(),
-          ),
           Wrap(
             spacing: 8,
             runSpacing: 8,
@@ -118,41 +106,6 @@ class _ProfessionalChartScreenState extends State<ProfessionalChartScreen> {
             ],
           ),
           const SizedBox(height: 12),
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            children: [
-              ChoiceChip(
-                label: const Text('Candles'),
-                selected: _chartType == ProChartType.candles,
-                onSelected: (_) {
-                  setState(() => _chartType = ProChartType.candles);
-                },
-              ),
-              ChoiceChip(
-                label: const Text('Heikin Ashi'),
-                selected: _chartType == ProChartType.heikinAshi,
-                onSelected: (_) {
-                  setState(() => _chartType = ProChartType.heikinAshi);
-                },
-              ),
-              ChoiceChip(
-                label: const Text('Bars'),
-                selected: _chartType == ProChartType.bars,
-                onSelected: (_) {
-                  setState(() => _chartType = ProChartType.bars);
-                },
-              ),
-              ChoiceChip(
-                label: const Text('Line'),
-                selected: _chartType == ProChartType.line,
-                onSelected: (_) {
-                  setState(() => _chartType = ProChartType.line);
-                },
-              ),
-            ],
-          ),
-          const SizedBox(height: 10),
           XGlassPanel(
             padding: EdgeInsets.zero,
             glowColor: TradeXColors.cyan,
