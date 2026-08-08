@@ -92557,9 +92557,9 @@ r4(a,b){return this.aqt(a,b)},
 aqs(a){return this.r4(a,260)},
 aqt(a,b){var s=0,r=A.U(t.QM),q,p,o,n,m,l,k,j,i,h,g
 var $async$r4=A.V(function(c,d){if(c===1)return A.R(d,r)
-for(;;)switch(s){case 0:if(B.c.fh("c167c20a43ae446ca0b962eba7cb75a8").length===0)throw A.i(A.b8("Twelve Data API key is missing. Launch with --dart-define=TWELVE_DATA_API_KEY=YOUR_KEY"))
+for(;;)switch(s){case 0:if(B.c.fh("").length===0)throw A.i(A.b8("Twelve Data API key is missing. Launch with --dart-define=TWELVE_DATA_API_KEY=YOUR_KEY"))
 s=3
-return A.Z(A.b_g(A.aXq("https","api.twelvedata.com","/time_series",A.aD(["symbol",a,"interval","1min","outputsize",B.h.k(b),"timezone","UTC","format","JSON","apikey","c167c20a43ae446ca0b962eba7cb75a8"],t.N,t.z))).Le(B.IL),$async$r4)
+return A.Z(A.b_g(A.aXq("https","api.twelvedata.com","/time_series",A.aD(["symbol",a,"interval","1min","outputsize",B.h.k(b),"timezone","UTC","format","JSON","apikey",""],t.N,t.z))).Le(B.IL),$async$r4)
 case 3:n=d
 m=n.b
 if(m!==200)throw A.i(A.b8("Market-data request failed ("+m+")."))
@@ -92851,7 +92851,7 @@ break
 default:s=null}return s},
 vG(a){if(a==null)return"\u2014"
 return A.aFR("h:mm:ss a").vF(a)},
-I(a){var s,r,q,p,o,n,m,l=this,k=null,j=A.dc(a,!0,t.ib),i=j.at,h=j.ax,g=t.p,f=A.hk(A.b([A.dS(k,k,B.L7,k,k,new A.a2Z(a),k,k,k),A.dS(k,k,B.LE,k,k,new A.a3_(a),k,k,"Integration"),A.dS(k,k,B.L5,k,k,new A.a30(a),k,k,k)],g),!1,B.bE,B.a1d),e=j.gKZ(),d=A.b([A.it(B.b2,A.b([l.z0("Data",B.c.fh("c167c20a43ae446ca0b962eba7cb75a8").length!==0?"LIVE READY":"KEY NEEDED"),l.z0("Win Rate",B.d.S(j.ga01(),1)+"%"),l.z0("Daily P/L","$"+B.d.S(j.gvc(),2)),l.z0("Trades Today",""+j.gLi()+"/"+j.r)],g),B.bP,12,12),B.bq],g),c=j.cx
+I(a){var s,r,q,p,o,n,m,l=this,k=null,j=A.dc(a,!0,t.ib),i=j.at,h=j.ax,g=t.p,f=A.hk(A.b([A.dS(k,k,B.L7,k,k,new A.a2Z(a),k,k,k),A.dS(k,k,B.LE,k,k,new A.a3_(a),k,k,"Integration"),A.dS(k,k,B.L5,k,k,new A.a30(a),k,k,k)],g),!1,B.bE,B.a1d),e=j.gKZ(),d=A.b([A.it(B.b2,A.b([l.z0("Data",B.c.fh("").length!==0?"LIVE READY":"KEY NEEDED"),l.z0("Win Rate",B.d.S(j.ga01(),1)+"%"),l.z0("Daily P/L","$"+B.d.S(j.gvc(),2)),l.z0("Trades Today",""+j.gLi()+"/"+j.r)],g),B.bP,12,12),B.bq],g),c=j.cx
 if(c!=null)d.push(A.eX(A.e7(!1,k,k,k,!0,k,k,k,!0,k,B.pv,k,k,k,k,k,!1,k,k,k,k,k,A.O(c,k,k,k,k,k,k),k,B.a1L,k,k)))
 c=A.O("Source: "+j.cy,k,k,k,k,k,k)
 s=j.db
@@ -93887,7 +93887,7 @@ I(a){var s=null
 return A.dN(s,B.Lc,B.q,s,new A.c5(s,s,s,A.dj(16),A.b([new A.bh(0,B.O,A.a5(51,B.E.p()>>>16&255,B.E.p()>>>8&255,B.E.p()&255),B.f,18)],t.E),B.pG,B.aa),s,48,s,s,s,s,48)}}
 A.QI.prototype={
 I(a2){var s,r,q,p,o,n,m,l,k,j,i,h,g,f,e=null,d=A.dc(a2,!0,t.ib),c=A.dc(a2,!0,t.MJ),b=A.dc(a2,!0,t.SJ),a=c.r,a0=a.length===0?e:B.b.ga0(a),a1=A.bv(a2,B.eL,t.w).w.a.a
-a=B.c.fh("c167c20a43ae446ca0b962eba7cb75a8").length!==0
+a=B.c.fh("").length!==0
 s=a?"MARKET DATA READY":"API KEY NEEDED"
 a=a?B.ab:B.bx
 r=b.b
