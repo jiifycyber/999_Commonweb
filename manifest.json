@@ -1,6 +1,6 @@
 {
-    "name": "noor_x",
-    "short_name": "noor_x",
+    "name": "commonweb",
+    "short_name": "commonweb",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
